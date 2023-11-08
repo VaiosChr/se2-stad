@@ -1,0 +1,874 @@
+openapi: 3.0.0
+info:
+  title: STAD API
+  description: Software Engineering Course STAD application
+  contact:
+    name: STAD Corp
+    email: support@stad.ss.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/IASONAS2001/STAD/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://7fe4cb38-ad4e-4260-a616-2eb859735bc3.mock.pstmn.io
+- url: http://127.0.0.1:1880/
+paths:
+  /admin/class:
+    post:
+      summary: create a class
+      description: the secretary must be able to create a class
+      operationId: createClass
+      requestBody:
+        description: Class model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin_class_body'
+        required: true
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /admin/class/{className}:
+    get:
+      summary: get class info
+      description: FR1 Ο καθηγητής και η γραμματεία πρέπει να μπορεί να επεξεργαστεί
+        την τάξη
+      operationId: getClassInfoAdmin
+      parameters:
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+    put:
+      summary: change class info
+      operationId: putClassInfoAdmin
+      parameters:
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Class model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/class_className_body'
+        required: true
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+    delete:
+      summary: delete class
+      operationId: deleteClass
+      parameters:
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /user/{userName}/class/{className}:
+    get:
+      summary: get class info
+      description: FR1 Ο καθηγητής και η γραμματεία πρέπει να μπορεί να επεξεργαστεί
+        την τάξη
+      operationId: getClassInfoUser
+      parameters:
+      - name: userName
+        in: path
+        description: the name of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+    put:
+      summary: change class info
+      operationId: put class info user
+      parameters:
+      - name: userName
+        in: path
+        description: the name of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Class model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/class_className_body_1'
+        required: true
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /user/{userName}:
+    get:
+      summary: get the user details
+      description: see the details of the user
+      operationId: getUserInfo
+      parameters:
+      - name: userName
+        in: path
+        description: the name of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/adminclass_user'
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+    put:
+      summary: edit the user details
+      operationId: editUserInfo
+      parameters:
+      - name: userName
+        in: path
+        description: the name of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: message model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_userName_body'
+        required: true
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /admin/class/{className}/user/{userName}/tests:
+    post:
+      summary: upload student tests
+      description: allows the admin to upload student tests
+      operationId: adminClassClassNameUserUserNameTestsPOST
+      parameters:
+      - name: userName
+        in: path
+        description: the name of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Test file
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userName_tests_body'
+        required: true
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /class/{className}/user/{userName}/notes:
+    post:
+      summary: upload notes
+      description: the teacher wants to upload notes
+      operationId: classClassNameUserUserNameNotesPOST
+      parameters:
+      - name: userName
+        in: path
+        description: the name of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: note model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userName_notes_body'
+        required: true
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /class/{className}/user/{userName}/exercises:
+    post:
+      summary: upload exercises
+      description: the teacher wants to upload exercises
+      operationId: classClassNameUserUserNameExercisesPOST
+      parameters:
+      - name: userName
+        in: path
+        description: the name of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: className
+        in: path
+        description: the name of the class
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userName_exercises_body'
+      responses:
+        "200":
+          description: successful upload
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /admin/user/{userName}/role:
+    put:
+      summary: edit the role of the user
+      description: the admin must be able to edit the roles of the users
+      operationId: editUserRole
+      parameters:
+      - name: userName
+        in: path
+        description: the name id of the notification
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userName_role_body'
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /admin/user:
+    post:
+      summary: Create a new user account
+      operationId: createUser
+      requestBody:
+        description: message model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin_user_body'
+        required: true
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+  /admin/user/{userName}:
+    delete:
+      summary: delete a user
+      operationId: deleteUser
+      parameters:
+      - name: userName
+        in: path
+        description: The user name for deletetion
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful deletetion
+        "400":
+          description: bad request
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    Class:
+      type: object
+      properties:
+        className:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/Class_users'
+    EnrolledUser:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/admin_user_body'
+        grade:
+          type: number
+    User:
+      type: object
+      properties:
+        userName:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+          format: int64
+    Chat:
+      type: array
+      items:
+        allOf:
+        - type: object
+          properties:
+            username:
+              type: string
+            message:
+              type: string
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+    Message:
+      allOf:
+      - type: object
+        properties:
+          username:
+            type: string
+          message:
+            type: string
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+    NewMessage:
+      type: object
+      properties:
+        username:
+          type: string
+        message:
+          type: string
+    Grade:
+      type: object
+      properties:
+        username:
+          type: string
+        className:
+          type: string
+        grade:
+          type: number
+    Notifications:
+      type: array
+      items:
+        allOf:
+        - type: object
+          properties:
+            title:
+              type: string
+            body:
+              type: string
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+    NewNotification:
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+    Notification:
+      allOf:
+      - type: object
+        properties:
+          title:
+            type: string
+          body:
+            type: string
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+    TestUpload:
+      type: object
+      properties:
+        title:
+          type: string
+        file:
+          type: string
+          format: binary
+    Test:
+      allOf:
+      - type: object
+        properties:
+          title:
+            type: string
+          file:
+            type: string
+            format: binary
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+    NoteUpload:
+      type: object
+      properties:
+        title:
+          type: string
+        file:
+          type: string
+          format: binary
+    adminclass_user:
+      type: object
+      properties:
+        userName:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+          format: int64
+      example:
+        surname: surname
+        name: name
+        id: 0
+        userName: userName
+        email: email
+    adminclass_users:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/adminclass_user'
+        grade:
+          type: number
+    admin_class_body:
+      type: object
+      properties:
+        className:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/adminclass_users'
+    inline_response_200:
+      type: object
+      properties:
+        className:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/Class_users'
+      example:
+        className: className
+        users:
+        - grade: 6.02745618307040320615897144307382404804229736328125
+          user:
+            surname: surname
+            name: name
+            id: 0
+            userName: userName
+            email: email
+        - grade: 6.02745618307040320615897144307382404804229736328125
+          user:
+            surname: surname
+            name: name
+            id: 0
+            userName: userName
+            email: email
+    class_className_body:
+      type: object
+      properties:
+        className:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/adminclass_users'
+    class_className_body_1:
+      type: object
+      properties:
+        className:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/adminclass_users'
+    user_userName_body:
+      type: object
+      properties:
+        userName:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+          format: int64
+    userName_tests_body:
+      allOf:
+      - type: object
+        properties:
+          title:
+            type: string
+          file:
+            type: string
+            format: binary
+      - type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+    userName_notes_body:
+      type: object
+      properties:
+        title:
+          type: string
+        file:
+          type: string
+          format: binary
+    userName_exercises_body:
+      type: object
+      properties:
+        subjectName:
+          type: string
+        exerciseId:
+          type: integer
+        solutionFile:
+          type: object
+    userName_role_body:
+      type: object
+      properties:
+        roleName:
+          type: string
+        permissions:
+          type: object
+    admin_user_body:
+      type: object
+      properties:
+        userName:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        email:
+          type: string
+        id:
+          type: integer
+          format: int64
+      example:
+        surname: surname
+        name: name
+        id: 0
+        userName: userName
+        email: email
+    Class_users:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/admin_user_body'
+        grade:
+          type: number
+      example:
+        grade: 6.02745618307040320615897144307382404804229736328125
+        user:
+          surname: surname
+          name: name
+          id: 0
+          userName: userName
+          email: email
+  requestBodies:
+    Role:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              roleName:
+                type: string
+              permissions:
+                type: object
+    ExerciseSolution:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              subjectName:
+                type: string
+              exerciseId:
+                type: integer
+              solutionFile:
+                type: object
+    ExerciseGrade:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              className:
+                type: string
+              exerciseId:
+                type: integer
+              grade:
+                type: number
+    ScheduleItem:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              className:
+                type: string
+              shceduleItem:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  time:
+                    type: integer
+    Test:
+      description: Test file
+      content:
+        application/json:
+          schema:
+            allOf:
+            - type: object
+              properties:
+                title:
+                  type: string
+                file:
+                  type: string
+                  format: binary
+            - type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+      required: true
+    Class:
+      description: Class model
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              className:
+                type: string
+              users:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        userName:
+                          type: string
+                        name:
+                          type: string
+                        surname:
+                          type: string
+                        email:
+                          type: string
+                        id:
+                          type: integer
+                          format: int64
+                    grade:
+                      type: number
+      required: true
+    NewMessage:
+      description: message model
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              message:
+                type: string
+      required: true
+    User:
+      description: message model
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userName:
+                type: string
+              name:
+                type: string
+              surname:
+                type: string
+              email:
+                type: string
+              id:
+                type: integer
+                format: int64
+      required: true
+    NewNotification:
+      description: notification model
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              body:
+                type: string
+      required: true
+    Grade:
+      description: notification model
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              className:
+                type: string
+              grade:
+                type: number
+      required: true
+    TestUpload:
+      description: test model
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              file:
+                type: string
+                format: binary
+      required: true
+    NoteUpload:
+      description: note model
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              file:
+                type: string
+                format: binary
+      required: true
