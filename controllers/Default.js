@@ -123,8 +123,8 @@ module.exports.getUserInfo = function getUserInfo (req, res, next, userName) {
     });
 };
 
-module.exports.put class info user = function put class info user (req, res, next, body, userName, className) {
-  Default.put class info user(body, userName, className)
+module.exports.putClassInfoUser = function putClassInfoUser(req, res, next, body, userName, className) {
+  Default.putClassInfoUser(body, userName, className)
     .then(function (response) {
       utils.writeJson(res, response);
     })
