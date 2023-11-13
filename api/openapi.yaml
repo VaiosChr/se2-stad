@@ -10,10 +10,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/IASONAS2001/STAD/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: https://7fe4cb38-ad4e-4260-a616-2eb859735bc3.mock.pstmn.io
-- url: http://127.0.0.1:1880/
+- url: /
 paths:
   /admin/class:
     post:
