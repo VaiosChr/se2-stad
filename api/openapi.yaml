@@ -10,7 +10,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url: /se2-stad-production.up.railway.app
+- url: /
 paths:
   /admin/class:
     post:
