@@ -6,3 +6,7 @@
 5. GET /user/{userName}/class/{className}
 6. PUT /user/{userName}/class/{className}
 */
+
+const test = require('ava');
+
+test('Pass test', async (t) => t.pass());

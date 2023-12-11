@@ -4,3 +4,7 @@
 3. POST /class/{className}/user/{userName}/exercises 
 4. PUT /admin/user/{userName}/role
 */
+
+const test = require('ava');
+
+test('Pass test', async (t) => t.pass());

@@ -4,3 +4,7 @@
 3. PUT /user/{userName}
 4. DELETE /admin/user/{userName}
 */
+
+const test = require('ava');
+
+test('Pass test', async (t) => t.pass());
