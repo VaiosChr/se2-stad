@@ -2,37 +2,25 @@ const hhtp = require('http');
 const test = require('ava');
 const listen = require('test-listen');
 const got = require('got');
+const axios = require('axios');
 
-const baseURL = 'se2-stad-production.up.railway.app';
+const baseURL = 'http://localhost:8080';
 const app = require('../index.js');
 
-test('POST /admin/class creates a class', async (t) => {
-    const url = `${baseURL}/admin/class`;
-    
-    const requestBody = {
-        className: 'ExampleClass',
-        users: [
-            {
-                user: {
-                    userName: 'exampleUser',
-                    name: 'John',
-                    surname: 'Doe',
-                    email: 'john.doe@example.com',
-                    id: 1,
-                },
-                grade: 90,
-            },
-        ],
-    };
+test('GET /admin/class/{classId}', async (t) => {
+    const classId = '5';
 
+    // make a GET request to the endpoint
+    const response = await axios(`${baseURL}/admin/class/${classId}`);
+    console.log(response.data);
+
+    // verify the response data
     try {
-        const response = await axios.post(url, requestBody, { headers });
-
         t.is(response.status, 200);
-        // Add more assertions based on your API response format
-        t.true(response.data.success);
+        t.is(response.data.users.length, 2);
+        t.is(response.data.users[0].user.id, 0);
     } catch (error) {
-        console.error(error.message);
+        console.log(error);
         t.fail();
     }
 });
