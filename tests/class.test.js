@@ -18,26 +18,28 @@ async function validateClassInfo(t, className) {
     const { body } = await t.context.got.get(`user/userName/class/${className}`);
     try {
         t.is(body.className, 'className');
-        t.is(body.users, [ {
-            grade : 6.027456183070403,
-            user : {
-              email : "email",
-              id : 0,
-              name : "name",
-              surname : "surname",
-              userName : "userName",
+        t.is(body.users, [
+            {
+              grade: 6.027456183070403,
+              user: {
+                email: 'email',
+                id: 0,
+                name: 'name',
+                surname: 'surname',
+                userName: 'userName',
+              },
             },
-          }, 
-          {
-            grade : 6.027456183070403,
-            user : {
-              email : "email",
-              id : 0,
-              name : "name",
-              surname : "surname",
-              userName : "userName",
-            }
-          } ]);
+            {
+              grade: 6.027456183070403,
+              user: {
+                email: 'email',
+                id: 0,
+                name: 'name',
+                surname: 'surname',
+                userName: 'userName',
+              },
+            },
+          ]);
         /*t.is(body.class.name, 'name');
         t.is(body.class.id, 0);
         t.is(body.class.userName, 'userName');
@@ -94,25 +96,28 @@ test('GET /user/{userName}/class/{classname}', async (t) => {
         t.is(statusCode, 200, 'Successful GET /user/{userName}/class/{classname}');
 
         t.is(body.className, 'className');
-        t.is(body.users, [ {
-            grade : 6.027456183070403,
-            user : {
-              surname : "surname",
-              name : "name",
-              id : 0,
-              userName : "userName",
-              email : "email"
-            }
-          }, {
-            grade : 6.027456183070403,
-            user : {
-              surname : "surname",
-              name : "name",
-              id : 0,
-              userName : "userName",
-              email : "email"
-            }
-          } ]);
+        t.is(body.users, [
+            {
+              grade: 6.027456183070403,
+              user: {
+                email: 'email',
+                id: 0,
+                name: 'name',
+                surname: 'surname',
+                userName: 'userName',
+              },
+            },
+            {
+              grade: 6.027456183070403,
+              user: {
+                email: 'email',
+                id: 0,
+                name: 'name',
+                surname: 'surname',
+                userName: 'userName',
+              },
+            },
+          ]);
         /*t.is(body.class.name, 'name');
         t.is(body.class.id, 0);
         t.is(body.class.userName, 'userName');
