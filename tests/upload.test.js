@@ -13,8 +13,6 @@ const listen = require('test-listen');
 const got = require('got');
 const onlyFunc = require('../service/DefaultService.js');
 
-test('Pass test', async (t) => t.pass());
-
 test.before(async (t) => {
     t.context.server = http.createServer(app);
     t.context.prefixUrl = await listen(t.context.server);
@@ -45,8 +43,8 @@ test('PUT admin/user/{userName}/role', async (t) => {
             
 });
 
-// editUserInfo function
-test('PUT admin/user/{userName}/role by editUserInfo function', async (t) => {
+// editUserRole function
+test('PUT admin/user/{userName}/role by editUserRole function', async (t) => {
     const updatedUser = {
         nameRole:'Teacher',
         permissions:'Has no permissions',
@@ -54,12 +52,12 @@ test('PUT admin/user/{userName}/role by editUserInfo function', async (t) => {
     };
 
     await t.notThrowsAsync(async () => {
-        await onlyFunc.editUserInfo(updatedUser);
+        await onlyFunc.editUserRole(updatedUser);
     });
 });
 
 // POST /class/{className}/user/{userName}/exercises 
-test('POST /class/{classname}/user/{username/exercises by createClass function', async (t) => {
+test('POST /class/{classname}/user/{username/exercises by classClassNameUserUserNameExercisesPOST function', async (t) => {
     const newClass = {
         classname: 'G class',
         userName: 'm.shadows',
@@ -69,7 +67,7 @@ test('POST /class/{classname}/user/{username/exercises by createClass function',
 
     }
     await t.notThrowsAsync(async () => {
-        await onlyFunc.createClass(newClass);
+        await onlyFunc.classClassNameUserUserNameExercisesPOST(newClass);
     });
 
 });
