@@ -71,3 +71,52 @@ test('POST /class/{classname}/user/{username}/exercises', async (t) => {
     }
 
 });
+
+
+// createClass function 
+test('POST /admin/class by createClass function', async (t) => {
+    const newClass = {
+        className: 'NewClass',
+        users: [
+            // Add user objects based on the schema
+            {
+            name: 'Matthew',
+            surname: 'Sanders',
+            userName: 'm.shadows',
+            email: 'matsandesr@example.com'
+            },
+        ],
+    };
+
+    await t.notThrowsAsync(async () => {
+        await createClass.call(t, newClass);
+    });
+
+    await validateClassInfo(t, newClass.className);
+});
+
+// POST /admin/class
+test('POST /admin/class', async (t) => {
+    const newClass = {
+        className: 'NewClass',
+        users: [
+            {
+                name: 'Matthew',
+                surname: 'Sanders',
+                userName: 'm.shadows',
+                email: 'matsandesr@example.com'
+            },
+        ],
+    };
+
+    const { statusCode } = await t.context.got.post('admin/class', { json: newClass });
+
+    try {
+        t.is(statusCode, 200, 'Successful POST /admin/class');
+    } catch (error) {
+        console.log(error);
+        t.fail();
+    }
+    
+    await validateClassInfo(t, newClass.className);
+});
