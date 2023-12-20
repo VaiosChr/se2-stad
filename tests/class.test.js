@@ -7,6 +7,13 @@
 6. PUT /user/{userName}/class/{className}
 */
 
+/*
+1. POST /admin/user
+2. GET /user/{userName}
+3. PUT /user/{userName}
+4. DELETE /admin/user/{userName}
+*/
+
 const test = require('ava');
 const http = require('http');
 const app = require('../index.js');
@@ -48,6 +55,7 @@ async function validateClassInfo(t, className) {
 }
 
 // initialize server for http requests
+
 test.before(async (t) => {
     t.context.server = http.createServer(app);
     t.context.prefixUrl = await listen(t.context.server);
@@ -163,6 +171,7 @@ test('PUT /user/{userName}/class/{classname}', async (t) => {
 
     try {
         t.is(statusCode, 200, 'Successful PUT /user/{userName}/class/{className}');
+
     } catch (error) {
         console.log(error);
         t.fail();
@@ -204,6 +213,4 @@ test('PUT /user/{userName}/class/{className} by putClassInfoUser function', asyn
     // test that the class is updated
     await validateClassInfo(t, updatedClass.className);
 });
-
-test('Pass test', async (t) => t.pass());
 
