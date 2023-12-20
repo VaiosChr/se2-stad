@@ -99,6 +99,7 @@ test('POST /admin/class', async (t) => {
 
     try {
         t.is(statusCode, 200, 'Successful POST /admin/class');
+
     } catch (error) {
         console.log(error);
         t.fail();
@@ -137,7 +138,7 @@ test('POST /admin/class by createClass function', async (t) => {
     };
 
     await t.notThrowsAsync(async () => {
-        await onlyFunc.createClass(newClass);
+        await onlyFunc.deleteClass(className);
     });
 
     // test that the class is created
@@ -293,6 +294,7 @@ test('GET /user/{userName}/class/{classname}', async (t) => {
     const className = 'className';
     const userName = 'userName';
 
+
     const { statusCode, body } = await t.context.got.get(`user/${userName}/class/${className}`);
     const expectedUsers = [
       {
@@ -412,3 +414,37 @@ test('PUT /user/{userName}/class/{className} by putClassInfoUser function', asyn
     // test that the class is updated
     await validateClassInfo(t, updatedClass.className);
 });
+
+// editClassInfo function
+test('PUT /user/{userName}/class/{className} by putClassInfoUser function', async (t) => {
+    const updatedClass = {
+        className : "className",
+        users : [ {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        }, {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        } ]
+    };
+
+    await t.notThrowsAsync(async () => {
+        await onlyFunc.putClassInfoUser(updatedClass, updatedClass.userName, updatedClass.className);
+    });
+
+    // test that the class is updated
+    await validateClassInfo(t, updatedClass.className);
+});
+
