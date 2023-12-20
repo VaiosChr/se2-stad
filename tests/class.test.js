@@ -44,7 +44,8 @@ async function validateClassInfo(t, className) {
           userName: 'userName',
         },
       },
-    ]
+    ];
+    
     try {
         t.deepEqual(body.className, 'className');
         t.deepEqual(body.users, expectedUsers);
@@ -55,7 +56,6 @@ async function validateClassInfo(t, className) {
 }
 
 // initialize server for http requests
-
 test.before(async (t) => {
     t.context.server = http.createServer(app);
     t.context.prefixUrl = await listen(t.context.server);
@@ -65,6 +65,206 @@ test.before(async (t) => {
 // shutdown server
 test.after.always((t) => {
     t.context.server.close();
+});
+
+// POST /admin/class
+test('POST /admin/class', async (t) => {
+    const newClass = {
+        className: 'className',
+        users: [
+          {
+            grade: 6.027456183070403,
+            user: {
+              email: 'email',
+              id: 0,
+              name: 'name',
+              surname: 'surname',
+              userName: 'userName',
+            },
+          },
+          {
+            grade: 6.027456183070403,
+            user: {
+              email: 'email',
+              id: 0,
+              name: 'name',
+              surname: 'surname',
+              userName: 'userName',
+            },
+          },
+        ],
+    };
+
+    const { statusCode } = await t.context.got.post('admin/class', { json: newClass });
+
+    try {
+        t.is(statusCode, 200, 'Successful POST /admin/class');
+
+    } catch (error) {
+        console.log(error);
+        t.fail();
+    }
+
+    // test that the class is created
+    await validateClassInfo(t, newClass.className);
+});
+
+// createClass function
+test('POST /admin/class by createClass function', async (t) => {
+    const newClass = {
+        className: 'className',
+        users: [
+          {
+            grade: 6.027456183070403,
+            user: {
+              email: 'email',
+              id: 0,
+              name: 'name',
+              surname: 'surname',
+              userName: 'userName',
+            },
+          },
+          {
+            grade: 6.027456183070403,
+            user: {
+              email: 'email',
+              id: 0,
+              name: 'name',
+              surname: 'surname',
+              userName: 'userName',
+            },
+          },
+        ],
+    };
+
+    await t.notThrowsAsync(async () => {
+        await onlyFunc.deleteClass(className);
+    });
+
+    // test that the class is created
+    await validateClassInfo(t, newClass.className);
+});
+
+// GET /admin/class/{classId}
+test('GET /admin/class/{classId}', async (t) => {
+    const className = 'className';
+
+    const { statusCode, body } = await t.context.got.get(`admin/class/${className}`);
+    const expectedUsers = [
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+    ]
+    try {
+        t.is(statusCode, 200, 'Successful GET /admin/class/{classId}');
+
+        t.deepEqual(body.className, 'className');
+        t.deepEqual(body.users, expectedUsers);
+    } catch (error) {
+        console.log(error);
+        t.fail();
+    }
+});
+
+// getClassInfo function
+test('GET /admin/class/{classId} by getClassInfoAdmin function', async (t) => {
+    const className = 'className';
+
+    await t.notThrowsAsync(async () => {
+        await onlyFunc.getClassInfoAdmin(className);
+    });
+
+    // test that the class is created
+    await validateClassInfo(t, className);
+});
+
+// PUT /admin/class/{classId}
+test('PUT /admin/class/{classId}', async (t) => {
+    const updatedClass = {
+        className : "className",
+        users : [ {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        }, {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        } ]
+    };
+
+    const { statusCode } = await t.context.got.put(`admin/class/${updatedClass.className}`, { json: updatedClass });
+
+    try {
+        t.is(statusCode, 200, 'Successful PUT /admin/class/{classId}');
+
+    } catch (error) {
+        console.log(error);
+        t.fail();
+    }
+
+    // test that the class is updated
+    await validateClassInfo(t, updatedClass.className);
+});
+
+// editClassInfo function
+test('PUT /admin/class/{classId} by putClassInfoAdmin function', async (t) => {
+    const updatedClass = {
+        className : "className",
+        users : [ {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        }, {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        } ]
+    };
+
+    await t.notThrowsAsync(async () => {
+        await onlyFunc.putClassInfoAdmin(updatedClass);
+    });
+
+    // test that the class is updated
+    await validateClassInfo(t, updatedClass.className);
 });
 
 // DELETE /admin/class/{classname}
@@ -93,6 +293,7 @@ test('DELETE /admin/class/{className} by deleteClass function', async (t) => {
 test('GET /user/{userName}/class/{classname}', async (t) => {
     const className = 'className';
     const userName = 'userName';
+
 
     const { statusCode, body } = await t.context.got.get(`user/${userName}/class/${className}`);
     const expectedUsers = [
@@ -176,6 +377,39 @@ test('PUT /user/{userName}/class/{classname}', async (t) => {
         console.log(error);
         t.fail();
     }
+
+    // test that the class is updated
+    await validateClassInfo(t, updatedClass.className);
+});
+
+// editClassInfo function
+test('PUT /user/{userName}/class/{className} by putClassInfoUser function', async (t) => {
+    const updatedClass = {
+        className : "className",
+        users : [ {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        }, {
+          grade : 6.027456183070403,
+          user : {
+            surname : "surname",
+            name : "name",
+            id : 0,
+            userName : "userName",
+            email : "email"
+          }
+        } ]
+    };
+
+    await t.notThrowsAsync(async () => {
+        await onlyFunc.putClassInfoUser(updatedClass, updatedClass.userName, updatedClass.className);
+    });
 
     // test that the class is updated
     await validateClassInfo(t, updatedClass.className);
