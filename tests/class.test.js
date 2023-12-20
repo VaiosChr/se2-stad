@@ -16,35 +16,31 @@ const onlyFunc = require('../service/DefaultService.js');
 
 async function validateClassInfo(t, className) {
     const { body } = await t.context.got.get(`user/userName/class/${className}`);
+    const expectedUsers = [
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+    ]
     try {
-        t.is(body.className, 'className');
-        t.is(body.users, [
-            {
-              grade: 6.027456183070403,
-              user: {
-                email: 'email',
-                id: 0,
-                name: 'name',
-                surname: 'surname',
-                userName: 'userName',
-              },
-            },
-            {
-              grade: 6.027456183070403,
-              user: {
-                email: 'email',
-                id: 0,
-                name: 'name',
-                surname: 'surname',
-                userName: 'userName',
-              },
-            },
-          ]);
-        /*t.is(body.class.name, 'name');
-        t.is(body.class.id, 0);
-        t.is(body.class.userName, 'userName');
-        t.is(body.class.email, 'email');
-        t.is(body.grade, '0');*/
+        t.deepEqual(body.className, 'className');
+        t.deepEqual(body.users, expectedUsers);
     } catch (error) {
         console.log(error);
         t.fail();
@@ -91,38 +87,33 @@ test('GET /user/{userName}/class/{classname}', async (t) => {
     const userName = 'userName';
 
     const { statusCode, body } = await t.context.got.get(`user/${userName}/class/${className}`);
-
+    const expectedUsers = [
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+    ]
     try {
         t.is(statusCode, 200, 'Successful GET /user/{userName}/class/{classname}');
 
-        t.is(body.className, 'className');
-        t.is(body.users, [
-            {
-              grade: 6.027456183070403,
-              user: {
-                email: 'email',
-                id: 0,
-                name: 'name',
-                surname: 'surname',
-                userName: 'userName',
-              },
-            },
-            {
-              grade: 6.027456183070403,
-              user: {
-                email: 'email',
-                id: 0,
-                name: 'name',
-                surname: 'surname',
-                userName: 'userName',
-              },
-            },
-          ]);
-        /*t.is(body.class.name, 'name');
-        t.is(body.class.id, 0);
-        t.is(body.class.userName, 'userName');
-        t.is(body.class.email, 'email');
-        t.is(body.grade, '0');*/
+        t.deepEqual(body.className, 'className');
+        t.deepEqual(body.users, expectedUsers);
     } catch (error) {
         console.log(error);
         t.fail();
@@ -141,30 +132,34 @@ test('GET /user/{userName}/class/{classname} by getClassInfo function', async (t
 
 // PUT /user/{userName}/class/{classname}
 test('PUT /user/{userName}/class/{classname}', async (t) => {
+    const updatedUsers = [
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+      {
+        grade: 6.027456183070403,
+        user: {
+          email: 'email',
+          id: 0,
+          name: 'name',
+          surname: 'surname',
+          userName: 'userName',
+        },
+      },
+    ]
     const updatedClass = {
         className : "className",
-        users : [ {
-          grade : 6.027456183070403,
-          user : {
-            surname : "surname",
-            name : "name",
-            id : 0,
-            userName : "userName",
-            email : "email"
-          }
-        }, {
-          grade : 6.027456183070403,
-          user : {
-            surname : "surname",
-            name : "name",
-            id : 0,
-            userName : "userName",
-            email : "email"
-          }
-        } ]
+        updatedUsers : updatedUsers,
     };
 
-    const { statusCode } = await t.context.got.put(`user/{userName}/class/${updatedClass.className}`, { json: updatedClass });
+    const { statusCode } = await t.context.got.put(`user/${updatedUsers[0].user.userName}/class/${updatedClass.className}`, { json: updatedClass });
 
     try {
         t.is(statusCode, 200, 'Successful PUT /user/{userName}/class/{className}');
@@ -178,7 +173,7 @@ test('PUT /user/{userName}/class/{classname}', async (t) => {
 });
 
 // editClassInfo function
-test('PUT /user/{userName}/class/{className} by editClassInfo function', async (t) => {
+test('PUT /user/{userName}/class/{className} by putClassInfoUser function', async (t) => {
     const updatedClass = {
         className : "className",
         users : [ {
