@@ -131,38 +131,31 @@ exports.editUserRole = function(body,userName) {
 }
 
 
-/**
- * get class info
- * FR1 Ο καθηγητής και η γραμματεία πρέπει να μπορεί να επεξεργαστεί την τάξη
- *
- * className String the name of the class
- * returns inline_response_200
- **/
-exports.getClassInfoAdmin = function(className) {
+function getClassInfo(className) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "className" : "className",
-  "users" : [ {
-    "grade" : 6.027456183070403,
-    "user" : {
-      "surname" : "surname",
-      "name" : "name",
-      "id" : 0,
-      "userName" : "userName",
-      "email" : "email"
-    }
-  }, {
-    "grade" : 6.027456183070403,
-    "user" : {
-      "surname" : "surname",
-      "name" : "name",
-      "id" : 0,
-      "userName" : "userName",
-      "email" : "email"
-    }
-  } ]
-};
+      "className": "className",
+      "users": [{
+        "grade": 6.027456183070403,
+        "user": {
+          "surname": "surname",
+          "name": "name",
+          "id": 0,
+          "userName": "userName",
+          "email": "email"
+        }
+      }, {
+        "grade": 6.027456183070403,
+        "user": {
+          "surname": "surname",
+          "name": "name",
+          "id": 0,
+          "userName": "userName",
+          "email": "email"
+        }
+      }]
+    };
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -176,41 +169,24 @@ exports.getClassInfoAdmin = function(className) {
  * get class info
  * FR1 Ο καθηγητής και η γραμματεία πρέπει να μπορεί να επεξεργαστεί την τάξη
  *
+ * className String the name of the class
+ * returns inline_response_200
+ **/
+exports.getClassInfoAdmin = function(className) {
+  return getClassInfo(className);
+}
+
+
+/**
+ * get class info
+ * FR1 Ο καθηγητής και η γραμματεία πρέπει να μπορεί να επεξεργαστεί την τάξη
+ *
  * userName String the name of the user
  * className String the name of the class
  * returns inline_response_200
  **/
 exports.getClassInfoUser = function(userName,className) {
-  return new Promise(function(resolve, reject) {
-    var examples = {};
-    examples['application/json'] = {
-  "className" : "className",
-  "users" : [ {
-    "grade" : 6.027456183070403,
-    "user" : {
-      "surname" : "surname",
-      "name" : "name",
-      "id" : 0,
-      "userName" : "userName",
-      "email" : "email"
-    }
-  }, {
-    "grade" : 6.027456183070403,
-    "user" : {
-      "surname" : "surname",
-      "name" : "name",
-      "id" : 0,
-      "userName" : "userName",
-      "email" : "email"
-    }
-  } ]
-};
-    if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
-    } else {
-      resolve();
-    }
-  });
+  return getClassInfo(className);
 }
 
 
